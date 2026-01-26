@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Moon, Sun, Heart, Sparkles, MessageCircle, Coffee, Users, Zap, Star, ArrowRight, Mail, Phone, Calendar, Clock, Send, X, Check, DollarSign, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 import './App.css';
+
+// Import photos
+import photo1 from './assets/photo1.jpg';
+import photo2 from './assets/photo2.jpeg';
+import photo3 from './assets/photo3.jpeg';
+import photo4 from './assets/photo4.jpeg';
+import photo5 from './assets/photo5.jpeg';
+import photo6 from './assets/photo6.jpg';
+import photo7 from './assets/photo7.jpg';
 
 const FriendBookingWebsite = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState([]);
   const [showContactModal, setShowContactModal] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -39,35 +46,33 @@ const FriendBookingWebsite = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log('Form submitted:', formData); // Debug log
+    console.log('Form submitted:', formData);
     setFormStatus('loading');
     
     try {
-      // Prepare email data
-      const emailData = {
-        from_name: formData.name,
-        from_email: formData.email,
-        message: formData.message,
-        type: formData.type,
-        date: formData.date,
-        time: formData.time,
-        duration: formData.duration,
-        session_type: formData.sessionType === 'other' ? formData.otherSessionType : formData.sessionType,
-        description: formData.description,
-        to_email: 'rentme.vick@gmail.com'
-      };
+      // Web3Forms - Direct email without registration
+      const formDataObj = new FormData();
+      formDataObj.append('access_key', 'c351643f-c21c-44c4-ad46-2077ddfaf175'); // Your Web3Forms access key
+      formDataObj.append('subject', `New Contact from RentMe - ${formData.name}`);
+      formDataObj.append('from_name', formData.name);
+      formDataObj.append('email', formData.email);
+      formDataObj.append('message', formData.message || formData.description || 'No message');
+      formDataObj.append('type', formData.type);
+      
+      if (formData.type === 'booking') {
+        formDataObj.append('date', formData.date || 'Not specified');
+        formDataObj.append('time', formData.time || 'Not specified');
+        formDataObj.append('duration', formData.duration || 'Not specified');
+        formDataObj.append('session_type', formData.sessionType === 'other' ? formData.otherSessionType : formData.sessionType || 'Not specified');
+      }
 
-      console.log('Sending email with data:', emailData); // Debug log
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataObj
+      });
 
-      // Send email using EmailJS
-      const result = await emailjs.send(
-        'service_cc8u2nh', // Your EmailJS service ID
-        'template_contact', // You'll create a simple template in EmailJS dashboard
-        emailData,
-        '5YaNDi8eqqCmCQO5R' // Your EmailJS public key
-      );
-
-      console.log('Email sent successfully:', result);
+      const result = await response.json();
+      console.log('Form submitted successfully:', result);
       setFormStatus('success');
       
       // Reset form after 3 seconds
@@ -77,43 +82,25 @@ const FriendBookingWebsite = () => {
           name: '',
           email: '',
           message: '',
+          description: '',
           type: 'message',
           date: '',
           time: '',
-          duration: '60',
+          duration: '',
           sessionType: '',
-          otherSessionType: '',
-          description: ''
+          otherSessionType: ''
         });
-        setShowContactModal(false);
-        setShowBookingModal(false);
+        if (formData.type === 'booking') {
+          setShowBookingModal(false);
+        } else {
+          setShowContactModal(false);
+        }
       }, 3000);
       
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error submitting form:', error);
       setFormStatus('error');
-      
-      // For demo purposes, we'll simulate success even without EmailJS setup
-      setTimeout(() => {
-        setFormStatus('success');
-        setTimeout(() => {
-          setFormStatus('');
-          setFormData({
-            name: '',
-            email: '',
-            message: '',
-            type: 'message',
-            date: '',
-            time: '',
-            duration: '60',
-            sessionType: '',
-            otherSessionType: '',
-            description: ''
-          });
-          setShowContactModal(false);
-          setShowBookingModal(false);
-        }, 3000);
-      }, 1000);
+      setTimeout(() => setFormStatus(''), 3000);
     }
   };
 
@@ -139,29 +126,6 @@ const FriendBookingWebsite = () => {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Particle System
-  useEffect(() => {
-    const newParticles = Array.from({ length: 50 }, (_, i) => ({
-      id: i,
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      size: Math.random() * 3 + 1,
-      speedX: (Math.random() - 0.5) * 0.5,
-      speedY: (Math.random() - 0.5) * 0.5,
-    }));
-    setParticles(newParticles);
-
-    const interval = setInterval(() => {
-      setParticles(prev => prev.map(p => ({
-        ...p,
-        x: (p.x + p.speedX + window.innerWidth) % window.innerWidth,
-        y: (p.y + p.speedY + window.innerHeight) % window.innerHeight,
-      })));
-    }, 50);
-
-    return () => clearInterval(interval);
   }, []);
 
   const ScrollReveal = ({ children, delay = 0, immediate = false }) => {
@@ -212,21 +176,10 @@ const FriendBookingWebsite = () => {
     <div className={`${darkMode ? 'dark' : ''} transition-colors duration-500`}>
       <div className="relative min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 overflow-hidden">
         
-        {/* Animated Background Particles */}
+        {/* Clean Background - No Particles */}
         <div className="fixed inset-0 pointer-events-none z-0">
-          {particles.map(p => (
-            <div
-              key={p.id}
-              className="absolute rounded-full bg-gradient-to-r from-purple-400 to-pink-400 dark:from-purple-600 dark:to-pink-600 opacity-40 pointer-events-none"
-              style={{
-                left: `${p.x}px`,
-                top: `${p.y}px`,
-                width: `${p.size}px`,
-                height: `${p.size}px`,
-                transition: 'all 0.05s linear',
-              }}
-            />
-          ))}
+          {/* Subtle gradient background overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-orange-500/5 dark:from-purple-900/10 dark:via-pink-900/10 dark:to-orange-900/10"></div>
         </div>
 
         {/* Gradient Blobs */}
@@ -247,205 +200,381 @@ const FriendBookingWebsite = () => {
           )}
         </button>
 
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center px-4 py-20 z-10">
-          <div className="max-w-5xl mx-auto text-center z-10">
-            <ScrollReveal immediate={true}>
-              <div className="inline-flex items-center gap-2 px-6 py-3 mb-8 bg-gradient-to-r from-purple-500/20 to-pink-500/20 dark:from-purple-600/30 dark:to-pink-600/30 rounded-full backdrop-blur-xl border border-purple-300/30 dark:border-purple-500/30">
-                <Sparkles className="w-5 h-5 text-purple-600 dark:text-purple-400 animate-pulse" />
-                <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
-                  Real conversations, real support
-                </span>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={200} immediate={true}>
-              <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 dark:from-purple-400 dark:via-pink-400 dark:to-orange-400 bg-clip-text text-transparent leading-tight animate-gradient">
-                Book me as a friend.
-              </h1>
-            </ScrollReveal>
-
-            <ScrollReveal delay={400} immediate={true}>
-              <p className="text-2xl md:text-3xl mb-8 text-gray-700 dark:text-gray-300 font-light">
-                No bullshit. No scams. No pressure.
-              </p>
-            </ScrollReveal>
-
-            <ScrollReveal delay={600} immediate={true}>
-              <p className="text-lg md:text-xl mb-12 text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-                This isn't a pitch. This isn't a trick. This is just a space where you can talk — 
-                freely, honestly, without pretending you've got everything figured out.
-              </p>
-            </ScrollReveal>
-
-            {/* Buttons moved OUTSIDE ScrollReveal */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center z-40 relative">
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openBookingModal();
-                }}
-                className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 text-white rounded-full font-semibold text-lg shadow-2xl hover:shadow-purple-500/50 dark:hover:shadow-purple-400/50 transition-all duration-300 hover:scale-105 flex items-center gap-2 z-50 relative"
-              >
-                Book a Session
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openContactModal();
-                }}
-                className="px-8 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl text-gray-800 dark:text-white rounded-full font-semibold text-lg border-2 border-purple-300 dark:border-purple-600 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:scale-105 z-50 relative"
-              >
-                Send Message
-              </button>
-            </div>
-
-            <ScrollReveal delay={1000}>
-              <div className="mt-16 animate-bounce">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Scroll slowly. This page is meant to be felt, not rushed. ↓
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* Who This Is For */}
-        <section className="relative py-32 px-4">
-          <div className="max-w-4xl mx-auto">
-            <ScrollReveal immediate={true}>
-              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-200/50 dark:border-purple-700/50 hover:scale-105 transition-all duration-500 hover:shadow-purple-500/30">
-                <div className="flex items-center gap-3 mb-6">
-                  <Heart className="w-8 h-8 text-pink-500 animate-pulse" />
-                  <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
-                    Who this is really for
-                  </h2>
-                </div>
-                <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mb-8 rounded-full animate-pulse"></div>
-                <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300">
-                  <p className="leading-relaxed">
-                    This is for you if you're <span className="font-semibold text-purple-600 dark:text-purple-400">over 18</span> and still quietly trying to understand life.
-                  </p>
-                  <p className="leading-relaxed">
-                    If you feel like everyone else looks sorted while you're just… <span className="italic">floating</span>.
-                  </p>
-                  <p className="leading-relaxed">
-                    If you overthink at night, replay conversations, worry about the future, and still wake up pretending everything is fine.
-                  </p>
-                  <p className="text-xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                    You don't need to be broken to be here. You just need to be human.
-                  </p>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* Simple Truth */}
-        <section className="relative py-32 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <ScrollReveal immediate={true}>
-              <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 dark:from-orange-400 dark:via-pink-400 dark:to-purple-500 bg-clip-text text-transparent">
-                A simple truth
-              </h2>
-            </ScrollReveal>
-            <ScrollReveal immediate={true}>
-              <div className="w-32 h-1 bg-gradient-to-r from-orange-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
-            </ScrollReveal>
-            <ScrollReveal immediate={true}>
-              <div className="space-y-6 text-xl text-gray-700 dark:text-gray-300">
-                <p>Let's clear something first.</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  This is not therapy. This is not coaching. This is not motivation talk.
-                </p>
-                <p>I won't give you fake positivity. I won't sell you "10 steps to success." I won't pretend life is easy.</p>
-                <p className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                  This is just a real conversation — between two people — where you're allowed to think out loud.
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* What You Can Talk About */}
-        <section className="relative py-32 px-4">
-          <div className="max-w-5xl mx-auto">
-            <ScrollReveal immediate={true}>
-              <div className="bg-gradient-to-br from-purple-100/80 via-pink-100/80 to-orange-100/80 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-orange-900/40 backdrop-blur-2xl rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-300/50 dark:border-purple-600/50">
-                <div className="flex items-center gap-3 mb-6">
-                  <MessageCircle className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-                  <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
-                    What you can talk about
-                  </h2>
-                </div>
-                <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mb-8 rounded-full"></div>
-                <p className="text-lg mb-8 text-gray-700 dark:text-gray-300">
-                  You can talk about things you usually keep inside.
-                </p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {[
-                    { icon: Coffee, text: "Work stress that follows you home", color: "from-orange-400 to-red-500" },
-                    { icon: Zap, text: "Money pressure you don't say out loud", color: "from-yellow-400 to-orange-500" },
-                    { icon: Users, text: 'Career confusion and "what am I even doing?" thoughts', color: "from-purple-400 to-pink-500" },
-                    { icon: Star, text: "Side-hustle ideas you're unsure about", color: "from-blue-400 to-purple-500" },
-                    { icon: Heart, text: "Life decisions that feel too big to make alone", color: "from-pink-400 to-purple-500" },
-                  ].map((item, idx) => (
-                    <ScrollReveal immediate={true} key={idx}>
-                      <div className="group bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl p-6 rounded-2xl hover:scale-105 transition-all duration-300 hover:shadow-2xl border border-purple-200/50 dark:border-purple-700/50 cursor-pointer">
-                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform`}>
-                          <item.icon className="w-6 h-6 text-white" />
-                        </div>
-                        <p className="text-gray-700 dark:text-gray-300 font-medium">{item.text}</p>
+        {/* Hero Section with Photo 1 - Mobile Optimized */}
+        <section className="relative min-h-screen flex items-center justify-center px-4 py-12 sm:py-16 md:py-20 z-10">
+          <div className="max-w-7xl mx-auto">
+            {/* Mobile: Photo first, Desktop: Side by side */}
+            <div className="space-y-8 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+              {/* Photo 1 - Mobile First */}
+              <div className="lg:hidden">
+                <ScrollReveal delay={200} immediate={true}>
+                  <div className="relative group mb-8">
+                    <div className="relative rounded-2xl overflow-hidden shadow-xl transform rotate-1 hover:rotate-0 transition-all duration-700 hover:scale-105 mx-auto max-w-sm">
+                      <div className="relative h-[320px] sm:h-[400px] md:h-[450px] overflow-hidden">
+                        <img 
+                          src={photo1} 
+                          alt="Hero" 
+                          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                       </div>
-                    </ScrollReveal>
-                  ))}
-                </div>
-                <ScrollReveal immediate={true}>
-                  <div className="mt-8 text-center">
-                    <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
-                      You don't need a perfect topic. You don't need the right words.
-                    </p>
-                    <p className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                      We'll find clarity together.
-                    </p>
+                    </div>
+                    {/* Animated background blob - smaller on mobile */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl -rotate-1 scale-105 -z-10 blur-2xl opacity-20 group-hover:opacity-30 transition-all duration-700 mx-auto max-w-sm"></div>
+                    
+                    {/* Floating elements - smaller on mobile */}
+                    <div className="absolute -top-2 -right-2 w-3 h-3 bg-yellow-400 rounded-full animate-bounce shadow-lg"></div>
+                    <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-pink-400 rounded-full animate-pulse shadow-lg"></div>
                   </div>
                 </ScrollReveal>
               </div>
-            </ScrollReveal>
+
+              {/* Content */}
+              <div className="text-center lg:text-left lg:order-1">
+                <ScrollReveal immediate={true}>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 dark:from-purple-600/30 dark:to-pink-600/30 rounded-full backdrop-blur-xl border border-purple-300/30 dark:border-purple-500/30">
+                    <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400 animate-pulse" />
+                    <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
+                      Real conversations, real support
+                    </span>
+                  </div>
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 dark:from-purple-400 dark:via-pink-400 dark:to-orange-400 bg-clip-text text-transparent leading-tight animate-gradient">
+                    Book me as a friend.
+                  </h1>
+                  <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 text-gray-700 dark:text-gray-300 font-light">
+                    No bullshit. No scams. No pressure.
+                  </p>
+                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 text-gray-600 dark:text-gray-400 max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto lg:mx-0 leading-relaxed">
+                    This isn't a pitch. This isn't a trick. This is just a space where you can talk — 
+                    freely, honestly, without pretending you've got everything figured out.
+                  </p>
+                  {/* Buttons moved OUTSIDE ScrollReveal */}
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center z-40 relative">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openBookingModal();
+                      }}
+                      className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 text-white rounded-full font-semibold text-base sm:text-lg lg:text-xl shadow-2xl hover:shadow-purple-500/50 dark:hover:shadow-purple-400/50 transition-all duration-300 hover:scale-105 flex items-center gap-2 z-50 relative"
+                    >
+                      Book a Session
+                      <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openContactModal();
+                      }}
+                      className="px-8 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl text-gray-800 dark:text-white rounded-full font-semibold text-base sm:text-lg lg:text-xl border-2 border-purple-300 dark:border-purple-600 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:scale-105 z-50 relative"
+                    >
+                      Send Message
+                    </button>
+                  </div>
+                </ScrollReveal>
+              </div>
+
+              {/* Photo 1 - Desktop Only */}
+              <div className="hidden lg:block lg:order-2">
+                <ScrollReveal delay={300} immediate={true}>
+                  <div className="relative group">
+                    <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-700 hover:scale-105">
+                      <div className="relative h-[400px] lg:h-[600px] overflow-hidden">
+                        <img 
+                          src={photo1} 
+                          alt="Hero" 
+                          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                      </div>
+                    </div>
+                    {/* Animated background blob */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl -rotate-3 scale-105 -z-10 blur-2xl opacity-20 group-hover:opacity-30 transition-all duration-700"></div>
+                    
+                    {/* Floating elements */}
+                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-bounce shadow-lg"></div>
+                    <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-pink-400 rounded-full animate-pulse shadow-lg"></div>
+                  </div>
+                </ScrollReveal>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* What I Actually Do */}
-        <section className="relative py-32 px-4">
-          <div className="max-w-4xl mx-auto">
+        {/* Who This Is For - With Photo 2 - Mobile Optimized */}
+        <section className="relative py-12 sm:py-16 md:py-32 px-4">
+          <div className="max-w-6xl mx-auto">
             <ScrollReveal immediate={true}>
-              <h2 className="text-5xl md:text-6xl font-bold mb-12 text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                What I actually do
-              </h2>
-            </ScrollReveal>
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {[
-                { title: "Listen properly", desc: "Not waiting for my turn to speak", emoji: "👂" },
-                { title: "Hype you up", desc: "Before interviews, calls, or big moments", emoji: "💪" },
-                { title: "Give honest feedback", desc: "Tell you when ideas need work, then help improve them", emoji: "💡" },
-                { title: "Be flexible", desc: "Walk, coffee, or just sit and talk", emoji: "☕" },
-              ].map((item, idx) => (
-                <ScrollReveal immediate={true} key={idx}>
-                  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl p-8 rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl shadow-xl border border-purple-200/50 dark:border-purple-700/50 group cursor-pointer h-full flex flex-col justify-between">
-                    <div>
-                      <div className="text-5xl mb-4 transition-transform duration-300">{item.emoji}</div>
-                      <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{item.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-400">{item.desc}</p>
+              <div className="space-y-8 sm:space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+                {/* Photo 2 - Mobile First */}
+                <div className="lg:hidden">
+                  <ScrollReveal delay={200} immediate={true}>
+                    <div className="relative group mb-6">
+                      <div className="relative rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-all duration-500 hover:rotate-1 mx-auto max-w-xs sm:max-w-sm">
+                        <div className="relative h-[240px] sm:h-[320px] overflow-hidden">
+                          <img 
+                            src={photo2} 
+                            alt="Real Conversations" 
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                            <div className="absolute bottom-3 left-3 right-3">
+                              <h3 className="text-white text-sm sm:text-base font-bold mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                Real Conversations
+                              </h3>
+                              <p className="text-white/70 text-xs sm:text-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                                Where authenticity meets understanding
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Floating elements - smaller on mobile */}
+                      <div className="absolute top-1 right-1 w-2 h-2 bg-yellow-400 rounded-full animate-bounce shadow-lg"></div>
+                      <div className="absolute bottom-1 left-1 w-2 h-2 bg-pink-400 rounded-full animate-pulse shadow-lg"></div>
+                    </div>
+                  </ScrollReveal>
+                </div>
+                
+                {/* Content */}
+                <div className="order-2 lg:order-1">
+                  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 md:p-12 shadow-2xl border border-purple-200/50 dark:border-purple-700/50 hover:scale-105 transition-all duration-500 hover:shadow-purple-500/30">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-6">
+                      <Heart className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-pink-500 animate-pulse" />
+                      <h2 className="text-xl sm:text-2xl lg:text-3xl md:text-4xl xl:text-5xl font-bold text-gray-800 dark:text-white">
+                        Who this is really for
+                      </h2>
+                    </div>
+                    <div className="w-12 sm:w-16 lg:w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mb-4 sm:mb-6 lg:mb-8 rounded-full animate-pulse"></div>
+                    <div className="space-y-3 sm:space-y-4 lg:space-y-6 text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                      <p className="leading-relaxed">
+                        This is for you if you're <span className="font-semibold text-purple-600 dark:text-purple-400">over 18</span> and still quietly trying to understand life.
+                      </p>
+                      <p className="leading-relaxed">
+                        If you feel like everyone else looks sorted while you're just… <span className="italic">floating</span>.
+                      </p>
+                      <p className="leading-relaxed">
+                        If you overthink at night, replay conversations, worry about the future, and still wake up pretending everything is fine.
+                      </p>
+                      <p className="text-base sm:text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                        You don't need to be broken to be here. You just need to be human.
+                      </p>
                     </div>
                   </div>
-                </ScrollReveal>
-              ))}
-            </div>
+                </div>
+                
+                {/* Photo 2 - Desktop Only */}
+                <div className="order-1 lg:order-2 hidden lg:block">
+                  <ScrollReveal delay={300} immediate={true}>
+                    <div className="relative group">
+                      <div className="relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-500 hover:rotate-1">
+                        <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden">
+                          <img 
+                            src={photo2} 
+                            alt="Real Conversations" 
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
+                              <h3 className="text-white text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                Real Conversations
+                              </h3>
+                              <p className="text-white/80 sm:text-white/90 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                                Where authenticity meets understanding
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Floating elements */}
+                      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 w-2 h-2 sm:w-3 sm:h-3 bg-yellow-400 rounded-full animate-bounce shadow-lg"></div>
+                      <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 w-2 h-2 sm:w-3 sm:h-3 bg-pink-400 rounded-full animate-pulse shadow-lg"></div>
+                    </div>
+                  </ScrollReveal>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* Simple Truth - With Photo 3 */}
+        <section className="relative py-32 px-4">
+          <div className="max-w-6xl mx-auto">
             <ScrollReveal immediate={true}>
-              <p className="text-2xl font-bold text-center mt-12 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                No judgement. No labels. Just real conversation.
-              </p>
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 dark:from-orange-400 dark:via-pink-400 dark:to-purple-500 bg-clip-text text-transparent">
+                    A simple truth
+                  </h2>
+                  <div className="w-32 h-1 bg-gradient-to-r from-orange-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+                  <div className="space-y-6 text-xl text-gray-700 dark:text-gray-300">
+                    <p>Let's clear something first.</p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                      This is not therapy. This is not coaching. This is not motivation talk.
+                    </p>
+                    <p>I won't give you fake positivity. I won't sell you "10 steps to success." I won't pretend life is easy.</p>
+                    <p className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                      This is just a real conversation — between two people — where you're allowed to think out loud.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Photo 3 - Individual showcase */}
+                <div>
+                  <ScrollReveal delay={300} immediate={true}>
+                    <div className="relative group">
+                      <div className="relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-rotate-2">
+                        <div className="relative h-[400px] lg:h-[500px] overflow-hidden">
+                          <img 
+                            src={photo3} 
+                            alt="Simple Truth" 
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-120 group-hover:rotate-3"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        </div>
+                      </div>
+                      {/* Floating elements */}
+                      <div className="absolute top-4 left-4 w-4 h-4 bg-blue-400 rounded-full animate-ping"></div>
+                      <div className="absolute bottom-4 right-4 w-3 h-3 bg-orange-400 rounded-full animate-bounce shadow-lg"></div>
+                    </div>
+                  </ScrollReveal>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* What You Can Talk About - With Photo 4 */}
+        <section className="relative py-32 px-4">
+          <div className="max-w-6xl mx-auto">
+            <ScrollReveal immediate={true}>
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <div className="bg-gradient-to-br from-purple-100/80 via-pink-100/80 to-orange-100/80 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-orange-900/40 backdrop-blur-2xl rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-300/50 dark:border-purple-600/50">
+                    <div className="flex items-center gap-3 mb-6">
+                      <MessageCircle className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                      <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
+                        What you can talk about
+                      </h2>
+                    </div>
+                    <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mb-8 rounded-full"></div>
+                    <p className="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                      You can talk about things you usually keep inside.
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {[
+                        { icon: Coffee, text: "Work stress that follows you home", color: "from-orange-400 to-red-500" },
+                        { icon: Zap, text: "Money pressure you don't say out loud", color: "from-yellow-400 to-orange-500" },
+                        { icon: Users, text: 'Career confusion and "what am I even doing?" thoughts', color: "from-purple-400 to-pink-500" },
+                        { icon: Star, text: "Side-hustle ideas you're unsure about", color: "from-blue-400 to-purple-500" },
+                        { icon: Heart, text: "Life decisions that feel too big to make alone", color: "from-pink-400 to-purple-500" },
+                      ].map((item, idx) => (
+                        <ScrollReveal immediate={true} key={idx}>
+                          <div className="group bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl p-6 rounded-2xl hover:scale-105 transition-all duration-300 hover:shadow-2xl border border-purple-200/50 dark:border-purple-700/50 cursor-pointer">
+                            <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform`}>
+                              <item.icon className="w-6 h-6 text-white" />
+                            </div>
+                            <p className="text-gray-700 dark:text-gray-300 font-medium">{item.text}</p>
+                          </div>
+                        </ScrollReveal>
+                      ))}
+                    </div>
+                    <ScrollReveal immediate={true}>
+                      <div className="mt-8 text-center">
+                        <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+                          You don't need a perfect topic. You don't need the right words.
+                        </p>
+                        <p className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                          We'll find clarity together.
+                        </p>
+                      </div>
+                    </ScrollReveal>
+                  </div>
+                </div>
+                
+                {/* Photo 4 - Individual showcase */}
+                <div className="order-1 lg:order-2">
+                  <ScrollReveal delay={300} immediate={true}>
+                    <div className="relative group">
+                      <div className="relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-500 hover:rotate-2">
+                        <div className="relative h-[400px] lg:h-[600px] overflow-hidden">
+                          <img 
+                            src={photo4} 
+                            alt="Deep Connections" 
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-125"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                            <div className="absolute bottom-6 left-6">
+                              <h3 className="text-white text-xl font-bold">Deep Connections</h3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Floating elements */}
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-bounce shadow-lg"></div>
+                      <div className="absolute bottom-4 left-4 w-3 h-3 bg-purple-400 rounded-full animate-pulse shadow-lg"></div>
+                    </div>
+                  </ScrollReveal>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* What I Actually Do - With Photo 5 */}
+        <section className="relative py-32 px-4">
+          <div className="max-w-6xl mx-auto">
+            <ScrollReveal immediate={true}>
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h2 className="text-5xl md:text-6xl font-bold mb-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    What I actually do
+                  </h2>
+                  <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
+                    {[
+                      { title: "Listen properly", desc: "Not waiting for my turn to speak", emoji: "👂" },
+                      { title: "Hype you up", desc: "Before interviews, calls, or big moments", emoji: "💪" },
+                      { title: "Give honest feedback", desc: "Tell you when ideas need work, then help improve them", emoji: "💡" },
+                      { title: "Be flexible", desc: "Walk, coffee, or just sit and talk", emoji: "☕" },
+                    ].map((item, idx) => (
+                      <ScrollReveal immediate={true} key={idx}>
+                        <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl p-8 rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl shadow-xl border border-purple-200/50 dark:border-purple-700/50 group cursor-pointer h-full flex flex-col justify-between">
+                          <div>
+                            <div className="text-5xl mb-4 transition-transform duration-300">{item.emoji}</div>
+                            <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{item.title}</h3>
+                            <p className="text-gray-600 dark:text-gray-400">{item.desc}</p>
+                          </div>
+                        </div>
+                      </ScrollReveal>
+                    ))}
+                  </div>
+                  <ScrollReveal immediate={true}>
+                    <p className="text-2xl font-bold text-center mt-12 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                      No judgement. No labels. Just real conversation.
+                    </p>
+                  </ScrollReveal>
+                </div>
+                
+                {/* Photo 5 - Individual showcase */}
+                <div>
+                  <ScrollReveal delay={300} immediate={true}>
+                    <div className="relative group">
+                      <div className="relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-rotate-1">
+                        <div className="relative h-[400px] lg:h-[500px] overflow-hidden">
+                          <img 
+                            src={photo5} 
+                            alt="What I Actually Do" 
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-115 group-hover:sepia-[0.3]"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-tr from-orange-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        </div>
+                      </div>
+                      {/* Floating elements */}
+                      <div className="absolute top-6 right-6 w-3 h-3 bg-red-400 rounded-full animate-pulse shadow-lg"></div>
+                      <div className="absolute bottom-6 left-6 w-4 h-4 bg-yellow-400 rounded-full animate-bounce shadow-lg"></div>
+                    </div>
+                  </ScrollReveal>
+                </div>
+              </div>
             </ScrollReveal>
           </div>
         </section>
@@ -498,31 +627,60 @@ const FriendBookingWebsite = () => {
           </div>
         </section>
 
-        {/* How This Works */}
+        {/* How This Works - With Photo 6 */}
         <section className="relative py-32 px-4">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <ScrollReveal immediate={true}>
-              <h2 className="text-5xl md:text-6xl font-bold mb-16 text-center bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 dark:from-orange-400 dark:via-red-400 dark:to-pink-500 bg-clip-text text-transparent">
-                How this works
-              </h2>
-            </ScrollReveal>
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                { step: "01", title: "You reach out", desc: "No long forms. No awkward explanations. Just a simple message.", color: "from-purple-500 to-pink-500" },
-                { step: "02", title: "We talk", desc: "A calm, honest conversation without pressure to impress or perform.", color: "from-pink-500 to-orange-500" },
-                { step: "03", title: "You move forward", desc: "With clarity. With confidence. Or at least with less noise in your head.", color: "from-orange-500 to-red-500" },
-              ].map((item, idx) => (
-                <ScrollReveal immediate={true} key={idx}>
-                  <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl p-8 rounded-2xl hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl border border-purple-200/50 dark:border-purple-700/50 group cursor-pointer">
-                    <div className={`absolute -top-6 left-8 w-16 h-16 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform`}>
-                      {item.step}
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4 mt-6 text-gray-800 dark:text-white">{item.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">{item.desc}</p>
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <h2 className="text-5xl md:text-6xl font-bold mb-16 bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 dark:from-orange-400 dark:via-red-400 dark:to-pink-500 bg-clip-text text-transparent">
+                    How this works
+                  </h2>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    {[
+                      { step: "01", title: "You reach out", desc: "No long forms. No awkward explanations. Just a simple message.", color: "from-purple-500 to-pink-500" },
+                      { step: "02", title: "We talk", desc: "A calm, honest conversation without pressure to impress or perform.", color: "from-pink-500 to-orange-500" },
+                      { step: "03", title: "You move forward", desc: "With clarity. With confidence. Or at least with less noise in your head.", color: "from-orange-500 to-red-500" },
+                    ].map((item, idx) => (
+                      <ScrollReveal immediate={true} key={idx}>
+                        <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl p-8 rounded-2xl hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl border border-purple-200/50 dark:border-purple-700/50 group cursor-pointer">
+                          <div className={`absolute -top-6 left-8 w-16 h-16 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform`}>
+                            {item.step}
+                          </div>
+                          <h3 className="text-2xl font-bold mb-4 mt-6 text-gray-800 dark:text-white">{item.title}</h3>
+                          <p className="text-gray-600 dark:text-gray-400">{item.desc}</p>
+                        </div>
+                      </ScrollReveal>
+                    ))}
                   </div>
-                </ScrollReveal>
-              ))}
-            </div>
+                </div>
+                
+                {/* Photo 6 - Individual showcase */}
+                <div className="order-1 lg:order-2">
+                  <ScrollReveal delay={300} immediate={true}>
+                    <div className="relative group">
+                      <div className="relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-500 hover:rotate-1">
+                        <div className="relative h-[400px] lg:h-[500px] overflow-hidden">
+                          <img 
+                            src={photo6} 
+                            alt="How This Works" 
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:contrast-125"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-bl from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                            <div className="absolute bottom-6 left-6 right-6">
+                              <h3 className="text-white text-xl font-bold">Authentic Space</h3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Floating elements */}
+                      <div className="absolute bottom-4 right-4 w-4 h-4 bg-purple-400 rounded-full animate-bounce shadow-lg"></div>
+                      <div className="absolute top-4 left-4 w-3 h-3 bg-blue-400 rounded-full animate-pulse shadow-lg"></div>
+                    </div>
+                  </ScrollReveal>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 
@@ -714,22 +872,105 @@ const FriendBookingWebsite = () => {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="relative py-32 px-4 bg-gradient-to-b from-transparent to-purple-100/50 dark:to-purple-900/30">
+        {/* Stunning Footer with Photo 7 - Mobile Optimized */}
+        <section className="relative py-12 sm:py-16 md:py-32 px-4 overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <ScrollReveal immediate={true}>
+              <div className="relative rounded-xl sm:rounded-2xl lg:rounded-[4rem] overflow-hidden shadow-2xl group">
+                {/* Photo 7 - Footer Background */}
+                <div className="relative h-[250px] sm:h-[350px] md:h-[500px] lg:h-[600px] overflow-hidden">
+                  <img 
+                    src={photo7} 
+                    alt="Footer" 
+                    className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600/30 via-pink-600/30 to-orange-600/30 mix-blend-multiply"></div>
+                </div>
+                
+                {/* Content Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-4 lg:p-8">
+                  <div className="text-center text-white max-w-4xl">
+                    <ScrollReveal delay={200} immediate={true}>
+                      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl lg:text-6xl xl:text-7xl font-black mb-3 sm:mb-4 lg:mb-8 leading-tight">
+                        Ready to talk?
+                      </h2>
+                    </ScrollReveal>
+                    
+                    <ScrollReveal delay={400} immediate={true}>
+                      <div className="inline-flex items-center gap-1 sm:gap-2 lg:gap-3 px-3 sm:px-4 lg:px-6 lg:px-8 py-1.5 sm:py-2 lg:py-4 rounded-xl lg:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 mb-4 sm:mb-6 lg:mb-12">
+                        <DollarSign className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6 text-yellow-400" />
+                        <span className="text-base sm:text-lg lg:text-2xl font-bold">$100</span>
+                        <span className="text-xs sm:text-sm lg:text-lg">/ session (Negotiable)</span>
+                      </div>
+                    </ScrollReveal>
+                    
+                    {/* CTA Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8 lg:mb-12 px-4 sm:px-0">
+                      <ScrollReveal delay={600} immediate={true}>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openBookingModal();
+                          }}
+                          className="group w-full sm:w-auto px-6 sm:px-8 lg:px-12 py-3 sm:py-3 lg:py-6 bg-white text-purple-600 rounded-full font-black text-sm sm:text-base lg:text-xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 shadow-2xl hover:shadow-white/50"
+                        >
+                          BOOK NOW
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 lg:w-5 lg:h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                        </button>
+                      </ScrollReveal>
+                      
+                      <ScrollReveal delay={800} immediate={true}>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openContactModal();
+                          }}
+                          className="group w-full sm:w-auto px-6 sm:px-8 lg:px-12 py-3 sm:py-3 lg:py-6 bg-white/10 backdrop-blur-xl text-white rounded-full font-bold text-sm sm:text-base lg:text-xl border-2 border-white/30 hover:bg-white/20 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3"
+                        >
+                          Message First
+                          <Mail className="w-4 h-4 sm:w-5 sm:h-5 lg:w-5 lg:h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                        </button>
+                      </ScrollReveal>
+                    </div>
+                    
+                    <ScrollReveal delay={1000} immediate={true}>
+                      <p className="text-sm sm:text-base lg:text-xl text-white/80 italic animate-pulse">
+                        Life doesn't need to be figured out all at once.
+                      </p>
+                    </ScrollReveal>
+                  </div>
+                </div>
+                
+                {/* Floating decorative elements - smaller on mobile */}
+                <div className="absolute top-4 left-4 w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 bg-yellow-400 rounded-full animate-bounce opacity-70"></div>
+                <div className="absolute bottom-4 right-4 w-6 h-6 sm:w-8 sm:h-8 lg:w-12 lg:h-12 bg-pink-400 rounded-full animate-pulse opacity-70"></div>
+                <div className="absolute top-1/2 left-1/4 w-2 h-2 sm:w-4 sm:h-4 lg:w-6 lg:h-6 bg-blue-400 rounded-full animate-spin opacity-70" style={{ animationDuration: '4s' }}></div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* Final Footer */}
+        <footer className="relative py-16 px-4 bg-gradient-to-b from-transparent to-purple-100/50 dark:to-purple-900/30">
           <div className="max-w-3xl mx-auto text-center">
             <ScrollReveal immediate={true}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-                Life doesn't need to be figured out all at once.
-              </h2>
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <Sparkles className="w-6 h-6 text-purple-600 dark:text-purple-400 animate-pulse" />
+                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                  Whenever you're ready.
+                </h2>
+                <Sparkles className="w-6 h-6 text-pink-600 dark:text-pink-400 animate-pulse" />
+              </div>
             </ScrollReveal>
             <ScrollReveal immediate={true}>
-              <p className="text-xl text-gray-700 dark:text-gray-300 mb-8">
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
                 Sometimes one honest conversation is enough to change the direction.
               </p>
             </ScrollReveal>
             <ScrollReveal immediate={true}>
-              <p className="text-lg text-gray-500 dark:text-gray-500 italic">
-                Whenever you're ready.
+              <p className="text-sm text-gray-500 dark:text-gray-500 italic">
+                © 2026 RentMe — Real conversations, real support.
               </p>
             </ScrollReveal>
           </div>
@@ -1059,6 +1300,71 @@ const FriendBookingWebsite = () => {
           
           .animate-blob {
             animation: blob 20s infinite ease-in-out;
+          }
+
+          @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+          }
+
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
+          }
+
+          @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+          }
+
+          .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+          }
+
+          /* Custom scrollbar */
+          ::-webkit-scrollbar {
+            width: 10px;
+          }
+
+          ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+          }
+
+          ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            border-radius: 5px;
+          }
+
+          ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #9333ea, #db2777);
+          }
+
+          /* Smooth scroll behavior */
+          html {
+            scroll-behavior: smooth;
+          }
+
+          /* Selection styling */
+          ::selection {
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            color: white;
+          }
+
+          /* Image hover effects */
+          .img-hover-zoom {
+            overflow: hidden;
+          }
+
+          .img-hover-zoom img {
+            transition: transform 0.5s ease;
+          }
+
+          .img-hover-zoom:hover img {
+            transform: scale(1.1);
+          }
+
+          /* Parallax effect for scroll */
+          .parallax-slow {
+            transition: transform 0.5s ease-out;
           }
         `}</style>
       </div>
