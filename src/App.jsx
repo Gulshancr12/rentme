@@ -3,10 +3,10 @@ import { Moon, Sun, Heart, Sparkles, MessageCircle, Coffee, Users, Zap, Star, Ar
 import './App.css';
 
 // Import photos
-import photo1 from './assets/photo1.jpg';
+import photo1 from './assets/photo1.png';
 import photo2 from './assets/photo2.jpeg';
 import photo3 from './assets/photo3.jpeg';
-import photo4 from './assets/photo4.jpeg';
+import photo4 from './assets/photo4.jpg';
 import photo5 from './assets/photo5.jpeg';
 import photo6 from './assets/photo6.jpg';
 import photo7 from './assets/photo7.jpg';
@@ -52,7 +52,7 @@ const FriendBookingWebsite = () => {
     try {
       // Web3Forms - Direct email without registration
       const formDataObj = new FormData();
-      formDataObj.append('access_key', 'c351643f-c21c-44c4-ad46-2077ddfaf175'); // Your Web3Forms access key
+      formDataObj.append('access_key', '1119f7e7-3751-486b-90b6-8472afdca6ea'); // Your Web3Forms access key
       formDataObj.append('subject', `New Contact from RentMe - ${formData.name}`);
       formDataObj.append('from_name', formData.name);
       formDataObj.append('email', formData.email);
@@ -216,7 +216,16 @@ const FriendBookingWebsite = () => {
                           alt="Hero" 
                           className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                          <div className="absolute bottom-3 left-3 right-3">
+                            <h3 className="text-white text-sm sm:text-base font-bold mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                              Your Safe Space
+                            </h3>
+                            <p className="text-white/70 text-xs sm:text-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                              Where you can be completely yourself
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     {/* Animated background blob - smaller on mobile */}
@@ -284,7 +293,16 @@ const FriendBookingWebsite = () => {
                           alt="Hero" 
                           className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                          <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
+                            <h3 className="text-white text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                              Your Safe Space
+                            </h3>
+                            <p className="text-white/80 sm:text-white/90 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                              Where you can be completely yourself
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     {/* Animated background blob */}
@@ -429,7 +447,16 @@ const FriendBookingWebsite = () => {
                             alt="Simple Truth" 
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-120 group-hover:rotate-3"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/40 to-pink-600/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
+                              <h3 className="text-white text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                Raw Honesty
+                              </h3>
+                              <p className="text-white/80 sm:text-white/90 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                                No filters, no pretense, just real talk
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       {/* Floating elements */}
@@ -565,7 +592,16 @@ const FriendBookingWebsite = () => {
                             alt="What I Actually Do" 
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-115 group-hover:sepia-[0.3]"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-tr from-orange-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                          <div className="absolute inset-0 bg-gradient-to-tr from-orange-600/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
+                              <h3 className="text-white text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                Pure Support
+                              </h3>
+                              <p className="text-white/80 sm:text-white/90 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                                I'm here to listen, not to fix
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       {/* Floating elements */}
