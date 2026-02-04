@@ -239,42 +239,44 @@ const FriendBookingWebsite = () => {
               </div>
 
               {/* Content */}
-              <div className="text-center lg:text-left lg:order-1">
+              <div className="text-center lg:text-left lg:order-1 w-full px-2 sm:px-4">
                 <ScrollReveal immediate={true}>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 dark:from-purple-600/30 dark:to-pink-600/30 rounded-full backdrop-blur-xl border border-purple-300/30 dark:border-purple-500/30">
-                    <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400 animate-pulse" />
-                    <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
-                      Real conversations, real support
-                    </span>
+                  <div className="flex justify-center lg:justify-start mb-6">
+                    <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 dark:from-purple-600/30 dark:to-pink-600/30 rounded-full backdrop-blur-xl border border-purple-300/30 dark:border-purple-500/30">
+                      <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400 animate-pulse flex-shrink-0" />
+                      <span className="text-xs sm:text-sm font-medium text-purple-700 dark:text-purple-300">
+                        Real conversations, real support
+                      </span>
+                    </div>
                   </div>
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 dark:from-purple-400 dark:via-pink-400 dark:to-orange-400 bg-clip-text text-transparent leading-tight animate-gradient">
+                  <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 dark:from-purple-400 dark:via-pink-400 dark:to-orange-400 bg-clip-text text-transparent leading-tight animate-gradient px-2">
                     Book me as a friend.
                   </h1>
-                  <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 text-gray-700 dark:text-gray-300 font-light">
+                  <p className="text-base sm:text-lg md:text-2xl lg:text-3xl mb-4 sm:mb-6 text-gray-700 dark:text-gray-300 font-light px-2">
                     No bullshit. No scams. No pressure.
                   </p>
-                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 text-gray-600 dark:text-gray-400 max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto lg:mx-0 leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-2xl mb-6 sm:mb-8 text-gray-600 dark:text-gray-400 max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl mx-auto lg:mx-0 leading-relaxed px-2">
                     This isn't a pitch. This isn't a trick. This is just a space where you can talk — 
                     freely, honestly, without pretending you've got everything figured out.
                   </p>
                   {/* Buttons moved OUTSIDE ScrollReveal */}
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center z-40 relative">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center z-40 relative w-full px-2">
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
                         openBookingModal();
                       }}
-                      className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 text-white rounded-full font-semibold text-base sm:text-lg lg:text-xl shadow-2xl hover:shadow-purple-500/50 dark:hover:shadow-purple-400/50 transition-all duration-300 hover:scale-105 flex items-center gap-2 z-50 relative"
+                      className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 text-white rounded-full font-semibold text-sm sm:text-base lg:text-xl shadow-2xl hover:shadow-purple-500/50 dark:hover:shadow-purple-400/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 z-50 relative"
                     >
                       Book a Session
-                      <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
                     </button>
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
                         openContactModal();
                       }}
-                      className="px-8 py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl text-gray-800 dark:text-white rounded-full font-semibold text-base sm:text-lg lg:text-xl border-2 border-purple-300 dark:border-purple-600 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:scale-105 z-50 relative"
+                      className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl text-gray-800 dark:text-white rounded-full font-semibold text-sm sm:text-base lg:text-xl border-2 border-purple-300 dark:border-purple-600 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:scale-105 z-50 relative"
                     >
                       Send Message
                     </button>
@@ -355,15 +357,15 @@ const FriendBookingWebsite = () => {
                 
                 {/* Content */}
                 <div className="order-2 lg:order-1">
-                  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 md:p-12 shadow-2xl border border-purple-200/50 dark:border-purple-700/50 hover:scale-105 transition-all duration-500 hover:shadow-purple-500/30">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-6">
-                      <Heart className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-pink-500 animate-pulse" />
-                      <h2 className="text-xl sm:text-2xl lg:text-3xl md:text-4xl xl:text-5xl font-bold text-gray-800 dark:text-white">
+                  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 shadow-2xl border border-purple-200/50 dark:border-purple-700/50 hover:scale-105 transition-all duration-500 hover:shadow-purple-500/30 mx-2 sm:mx-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                      <Heart className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-pink-500 animate-pulse flex-shrink-0" />
+                      <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-800 dark:text-white">
                         Who this is really for
                       </h2>
                     </div>
                     <div className="w-12 sm:w-16 lg:w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mb-4 sm:mb-6 lg:mb-8 rounded-full animate-pulse"></div>
-                    <div className="space-y-3 sm:space-y-4 lg:space-y-6 text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                    <div className="space-y-2 sm:space-y-4 lg:space-y-6 text-xs sm:text-base text-gray-700 dark:text-gray-300">
                       <p className="leading-relaxed">
                         This is for you if you're <span className="font-semibold text-purple-600 dark:text-purple-400">over 18</span> and still quietly trying to understand life.
                       </p>
@@ -373,7 +375,7 @@ const FriendBookingWebsite = () => {
                       <p className="leading-relaxed">
                         If you overthink at night, replay conversations, worry about the future, and still wake up pretending everything is fine.
                       </p>
-                      <p className="text-base sm:text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                      <p className="text-sm sm:text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                         You don't need to be broken to be here. You just need to be human.
                       </p>
                     </div>
@@ -415,22 +417,22 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* Simple Truth - With Photo 3 */}
-        <section className="relative py-32 px-4">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
           <div className="max-w-6xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 dark:from-orange-400 dark:via-pink-400 dark:to-purple-500 bg-clip-text text-transparent">
+              <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center">
+                <div className="px-2 sm:px-0 text-center">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-8 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 dark:from-orange-400 dark:via-pink-400 dark:to-purple-500 bg-clip-text text-transparent">
                     A simple truth
                   </h2>
-                  <div className="w-32 h-1 bg-gradient-to-r from-orange-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
-                  <div className="space-y-6 text-xl text-gray-700 dark:text-gray-300">
+                  <div className="w-20 sm:w-32 h-1 bg-gradient-to-r from-orange-500 to-purple-600 mb-6 sm:mb-12 rounded-full mx-auto"></div>
+                  <div className="space-y-3 sm:space-y-6 text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">
                     <p>Let's clear something first.</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <p className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">
                       This is not therapy. This is not coaching. This is not motivation talk.
                     </p>
                     <p>I won't give you fake positivity. I won't sell you "10 steps to success." I won't pretend life is easy.</p>
-                    <p className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    <p className="text-lg sm:text-2xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                       This is just a real conversation — between two people — where you're allowed to think out loud.
                     </p>
                   </div>
@@ -471,23 +473,23 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* What You Can Talk About - With Photo 4 */}
-        <section className="relative py-32 px-4">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
           <div className="max-w-6xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <div className="bg-gradient-to-br from-purple-100/80 via-pink-100/80 to-orange-100/80 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-orange-900/40 backdrop-blur-2xl rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-300/50 dark:border-purple-600/50">
-                    <div className="flex items-center gap-3 mb-6">
-                      <MessageCircle className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-                      <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
+              <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center">
+                <div className="order-2 lg:order-1 px-2 sm:px-0">
+                  <div className="bg-gradient-to-br from-purple-100/80 via-pink-100/80 to-orange-100/80 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-orange-900/40 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 shadow-2xl border border-purple-300/50 dark:border-purple-600/50">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6 justify-center">
+                      <MessageCircle className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white text-center">
                         What you can talk about
                       </h2>
                     </div>
-                    <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mb-8 rounded-full"></div>
-                    <p className="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                    <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mb-4 sm:mb-8 rounded-full mx-auto"></div>
+                    <p className="text-sm sm:text-lg mb-6 sm:mb-8 text-gray-700 dark:text-gray-300">
                       You can talk about things you usually keep inside.
                     </p>
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                       {[
                         { icon: Coffee, text: "Work stress that follows you home", color: "from-orange-400 to-red-500" },
                         { icon: Zap, text: "Money pressure you don't say out loud", color: "from-yellow-400 to-orange-500" },
@@ -496,21 +498,21 @@ const FriendBookingWebsite = () => {
                         { icon: Heart, text: "Life decisions that feel too big to make alone", color: "from-pink-400 to-purple-500" },
                       ].map((item, idx) => (
                         <ScrollReveal immediate={true} key={idx}>
-                          <div className="group bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl p-6 rounded-2xl hover:scale-105 transition-all duration-300 hover:shadow-2xl border border-purple-200/50 dark:border-purple-700/50 cursor-pointer">
-                            <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform`}>
-                              <item.icon className="w-6 h-6 text-white" />
+                          <div className="group bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl p-4 sm:p-6 rounded-2xl hover:scale-105 transition-all duration-300 hover:shadow-2xl border border-purple-200/50 dark:border-purple-700/50 cursor-pointer">
+                            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center mb-3 sm:mb-4 group-hover:rotate-12 transition-transform flex-shrink-0`}>
+                              <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </div>
-                            <p className="text-gray-700 dark:text-gray-300 font-medium">{item.text}</p>
+                            <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium">{item.text}</p>
                           </div>
                         </ScrollReveal>
                       ))}
                     </div>
                     <ScrollReveal immediate={true}>
-                      <div className="mt-8 text-center">
-                        <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+                      <div className="mt-6 sm:mt-8 text-center">
+                        <p className="text-sm sm:text-lg text-gray-700 dark:text-gray-300 mb-2 sm:mb-4">
                           You don't need a perfect topic. You don't need the right words.
                         </p>
-                        <p className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                        <p className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                           We'll find clarity together.
                         </p>
                       </div>
@@ -548,15 +550,15 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* What I Actually Do - With Photo 5 */}
-        <section className="relative py-32 px-4">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
           <div className="max-w-6xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h2 className="text-5xl md:text-6xl font-bold mb-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+              <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center">
+                <div className="px-2 sm:px-0 text-center">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                     What I actually do
                   </h2>
-                  <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
+                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-8 max-w-4xl">
                     {[
                       { title: "Listen properly", desc: "Not waiting for my turn to speak", emoji: "👂" },
                       { title: "Hype you up", desc: "Before interviews, calls, or big moments", emoji: "💪" },
@@ -564,18 +566,18 @@ const FriendBookingWebsite = () => {
                       { title: "Be flexible", desc: "Walk, coffee, or just sit and talk", emoji: "☕" },
                     ].map((item, idx) => (
                       <ScrollReveal immediate={true} key={idx}>
-                        <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl p-8 rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl shadow-xl border border-purple-200/50 dark:border-purple-700/50 group cursor-pointer h-full flex flex-col justify-between">
+                        <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl p-4 sm:p-6 md:p-8 rounded-2xl hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl shadow-xl border border-purple-200/50 dark:border-purple-700/50 group cursor-pointer h-full flex flex-col justify-between">
                           <div>
-                            <div className="text-5xl mb-4 transition-transform duration-300">{item.emoji}</div>
-                            <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{item.title}</h3>
-                            <p className="text-gray-600 dark:text-gray-400">{item.desc}</p>
+                            <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 transition-transform duration-300">{item.emoji}</div>
+                            <h3 className="text-lg sm:text-2xl font-bold mb-1 sm:mb-2 text-gray-800 dark:text-white">{item.title}</h3>
+                            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
                           </div>
                         </div>
                       </ScrollReveal>
                     ))}
                   </div>
                   <ScrollReveal immediate={true}>
-                    <p className="text-2xl font-bold text-center mt-12 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    <p className="text-xl sm:text-2xl font-bold text-center mt-8 sm:mt-12 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                       No judgement. No labels. Just real conversation.
                     </p>
                   </ScrollReveal>
@@ -616,22 +618,22 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* Why This Exists */}
-        <section className="relative py-32 px-4">
-          <div className="max-w-3xl mx-auto text-center">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
+          <div className="max-w-3xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="bg-gradient-to-br from-pink-200/60 via-purple-200/60 to-blue-200/60 dark:from-pink-900/40 dark:via-purple-900/40 dark:to-blue-900/40 backdrop-blur-2xl rounded-3xl p-12 shadow-2xl border border-purple-300/50 dark:border-purple-600/50 hover:scale-105 transition-all duration-500">
-                <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+              <div className="bg-gradient-to-br from-pink-200/60 via-purple-200/60 to-blue-200/60 dark:from-pink-900/40 dark:via-purple-900/40 dark:to-blue-900/40 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl border border-purple-300/50 dark:border-purple-600/50 hover:scale-105 transition-all duration-500 mx-2 sm:mx-0">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                   Why this exists
                 </h2>
-                <div className="w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-8 rounded-full"></div>
-                <div className="space-y-6 text-xl text-gray-700 dark:text-gray-300">
+                <div className="w-20 sm:w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mb-6 sm:mb-8 rounded-full"></div>
+                <div className="space-y-3 sm:space-y-6 text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">
                   <p>Because life is already loud.</p>
                   <p>Everyone wants to fix you. Sell you something. Tell you how to live.</p>
                   <p>Sometimes you don't need advice. You need space.</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <p className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">
                     Space to talk. Space to think. Space to breathe.
                   </p>
-                  <p className="text-lg italic">That's all this is.</p>
+                  <p className="text-base sm:text-lg italic">That's all this is.</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -639,22 +641,22 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* How People Feel After */}
-        <section className="relative py-32 px-4">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
           <div className="max-w-4xl mx-auto">
             <ScrollReveal immediate={true}>
-              <h2 className="text-5xl md:text-6xl font-bold mb-12 text-center bg-gradient-to-r from-green-500 via-teal-500 to-blue-600 dark:from-green-400 dark:via-teal-400 dark:to-blue-500 bg-clip-text text-transparent">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-12 text-center bg-gradient-to-r from-green-500 via-teal-500 to-blue-600 dark:from-green-400 dark:via-teal-400 dark:to-blue-500 bg-clip-text text-transparent px-2">
                 How people usually feel after
               </h2>
             </ScrollReveal>
             <ScrollReveal immediate={true}>
-              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl rounded-3xl p-8 md:p-12 shadow-2xl border border-green-200/50 dark:border-green-700/50">
-                <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300">
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl border border-green-200/50 dark:border-green-700/50 mx-2 sm:mx-0">
+                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">
                   <p>Most people don't leave with their life magically solved.</p>
-                  <p className="text-xl font-semibold text-gray-900 dark:text-white">
+                  <p className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
                     They leave feeling lighter. Clearer. Less alone.
                   </p>
                   <p>They stop blaming themselves so much. They understand their next step a little better.</p>
-                  <p className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
+                  <p className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
                     Not because someone told them what to do — but because they finally heard themselves clearly.
                   </p>
                 </div>
@@ -664,27 +666,27 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* How This Works - With Photo 6 */}
-        <section className="relative py-32 px-4">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
           <div className="max-w-6xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <h2 className="text-5xl md:text-6xl font-bold mb-16 bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 dark:from-orange-400 dark:via-red-400 dark:to-pink-500 bg-clip-text text-transparent">
+              <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center">
+                <div className="order-2 lg:order-1 px-2 sm:px-0 text-center">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-16 bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 dark:from-orange-400 dark:via-red-400 dark:to-pink-500 bg-clip-text text-transparent">
                     How this works
                   </h2>
-                  <div className="grid md:grid-cols-3 gap-8">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                     {[
                       { step: "01", title: "You reach out", desc: "No long forms. No awkward explanations. Just a simple message.", color: "from-purple-500 to-pink-500" },
                       { step: "02", title: "We talk", desc: "A calm, honest conversation without pressure to impress or perform.", color: "from-pink-500 to-orange-500" },
                       { step: "03", title: "You move forward", desc: "With clarity. With confidence. Or at least with less noise in your head.", color: "from-orange-500 to-red-500" },
                     ].map((item, idx) => (
                       <ScrollReveal immediate={true} key={idx}>
-                        <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl p-8 rounded-2xl hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl border border-purple-200/50 dark:border-purple-700/50 group cursor-pointer">
-                          <div className={`absolute -top-6 left-8 w-16 h-16 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform`}>
+                        <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-2xl p-4 sm:p-6 rounded-2xl hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl border border-purple-200/50 dark:border-purple-700/50 group cursor-pointer pt-8 sm:pt-12">
+                          <div className={`absolute -top-4 sm:-top-6 left-4 sm:left-8 w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center text-white font-bold text-sm sm:text-xl shadow-lg group-hover:scale-110 transition-transform`}>
                             {item.step}
                           </div>
-                          <h3 className="text-2xl font-bold mb-4 mt-6 text-gray-800 dark:text-white">{item.title}</h3>
-                          <p className="text-gray-600 dark:text-gray-400">{item.desc}</p>
+                          <h3 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4 text-gray-800 dark:text-white">{item.title}</h3>
+                          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
                         </div>
                       </ScrollReveal>
                     ))}
@@ -721,53 +723,55 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* Pricing Section */}
-        <section className="relative py-32 px-4">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
           <div className="max-w-4xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="bg-gradient-to-br from-green-100/80 via-emerald-100/80 to-teal-100/80 dark:from-green-900/40 dark:via-emerald-900/40 dark:to-teal-900/40 backdrop-blur-2xl rounded-3xl p-8 md:p-12 shadow-2xl border border-green-300/50 dark:border-green-700/50">
-                <div className="flex items-center gap-3 mb-6">
-                  <DollarSign className="w-8 h-8 text-green-600 dark:text-green-400" />
-                  <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
+              <div className="bg-gradient-to-br from-green-100/80 via-emerald-100/80 to-teal-100/80 dark:from-green-900/40 dark:via-emerald-900/40 dark:to-teal-900/40 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl border border-green-300/50 dark:border-green-700/50 mx-2 sm:mx-0">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                  <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-green-600 dark:text-green-400 flex-shrink-0" />
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white">
                     Investment in Clarity
                   </h2>
                 </div>
-                <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-teal-500 mb-8 rounded-full"></div>
+                <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-green-500 to-teal-500 mb-6 sm:mb-8 rounded-full"></div>
                 
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-200/50 dark:bg-green-800/30 rounded-full backdrop-blur-xl border border-green-300/50 dark:border-green-600/50 mb-6">
-                    <DollarSign className="w-6 h-6 text-green-600 dark:text-green-400" />
-                    <span className="text-3xl font-bold text-gray-800 dark:text-white">$100</span>
-                    <span className="text-lg text-gray-600 dark:text-gray-400">per session</span>
+                <div className="text-center mb-6 sm:mb-8">
+                  <div className="inline-flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-green-200/50 dark:bg-green-800/30 rounded-full backdrop-blur-xl border border-green-300/50 dark:border-green-600/50 mb-4 sm:mb-6">
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400 flex-shrink-0" />
+                      <span className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">$100</span>
+                    </div>
+                    <span className="text-sm sm:text-lg text-gray-600 dark:text-gray-400">per session</span>
                   </div>
                   
-                  <p className="text-xl text-gray-700 dark:text-gray-300 mb-4">
+                  <p className="text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-3 sm:mb-4 px-2">
                     Quality conversation time that can change your perspective
                   </p>
                   
-                  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-2xl p-6 border border-green-200/50 dark:border-green-700/50">
-                    <p className="text-lg text-gray-600 dark:text-gray-400 italic mb-3">
+                  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-green-200/50 dark:border-green-700/50">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 italic mb-2 sm:mb-3">
                       <span className="font-semibold text-green-600 dark:text-green-400">Negotiable</span> - 
                       Your situation matters more than the price
                     </p>
-                    <p className="text-gray-700 dark:text-gray-300">
+                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
                       If you're genuinely in need but the cost is a barrier, let's talk about it. 
                       The goal is to help, not to create financial stress.
                     </p>
                   </div>
                 </div>
                 
-                <div className="grid md:grid-cols-3 gap-6 text-center">
-                  <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-xl p-4 border border-green-200/50 dark:border-green-700/50">
-                    <p className="text-2xl font-bold text-gray-800 dark:text-white mb-2">30 min</p>
-                    <p className="text-gray-600 dark:text-gray-400">Quick clarity session</p>
+                <div className="grid sm:grid-cols-3 gap-3 sm:gap-6 text-center">
+                  <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-xl p-3 sm:p-4 border border-green-200/50 dark:border-green-700/50">
+                    <p className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">30 min</p>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Quick clarity session</p>
                   </div>
-                  <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-xl p-4 border border-green-200/50 dark:border-green-700/50">
-                    <p className="text-2xl font-bold text-gray-800 dark:text-white mb-2">60 min</p>
-                    <p className="text-gray-600 dark:text-gray-400">Standard session</p>
+                  <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-xl p-3 sm:p-4 border border-green-200/50 dark:border-green-700/50">
+                    <p className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">60 min</p>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Standard session</p>
                   </div>
-                  <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-xl p-4 border border-green-200/50 dark:border-green-700/50">
-                    <p className="text-2xl font-bold text-gray-800 dark:text-white mb-2">90 min</p>
-                    <p className="text-gray-600 dark:text-gray-400">Deep dive session</p>
+                  <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-xl p-3 sm:p-4 border border-green-200/50 dark:border-green-700/50">
+                    <p className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">90 min</p>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Deep dive session</p>
                   </div>
                 </div>
               </div>
@@ -776,22 +780,22 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* FAQs Section */}
-        <section className="relative py-32 px-4">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
           <div className="max-w-4xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center gap-3 mb-6">
-                  <HelpCircle className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-                  <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
+              <div className="text-center mb-8 sm:mb-12 px-2">
+                <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6 flex-wrap">
+                  <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 dark:text-white">
                     Frequently Asked Questions
                   </h2>
                 </div>
-                <div className="w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+                <div className="w-20 sm:w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
               </div>
             </ScrollReveal>
             
             {/* FAQs moved OUTSIDE ScrollReveal */}
-            <div className="space-y-4 z-40 relative">
+            <div className="space-y-3 sm:space-y-4 z-40 relative px-2 sm:px-0">
               {[
                 {
                   question: "Is this therapy or counseling?",
@@ -840,20 +844,20 @@ const FriendBookingWebsite = () => {
                       e.stopPropagation();
                       setExpandedFAQ(expandedFAQ === idx ? null : idx);
                     }}
-                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-white/80 dark:hover:bg-gray-700/80 transition-colors"
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 text-left flex items-center justify-between hover:bg-white/80 dark:hover:bg-gray-700/80 transition-colors"
                   >
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white pr-4">
+                    <h3 className="text-sm sm:text-lg font-semibold text-gray-800 dark:text-white pr-2 sm:pr-4">
                       {faq.question}
                     </h3>
                     {expandedFAQ === idx ? (
-                      <ChevronUp className="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                      <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 flex-shrink-0" />
                     ) : (
-                      <ChevronDown className="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                      <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 flex-shrink-0" />
                     )}
                   </button>
                   {expandedFAQ === idx && (
-                    <div className="px-6 pb-4">
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <div className="px-4 sm:px-6 pb-3 sm:pb-4">
+                      <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                         {faq.answer}
                       </p>
                     </div>
@@ -865,18 +869,18 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* Boundaries */}
-        <section className="relative py-32 px-4">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
           <div className="max-w-4xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="bg-gradient-to-br from-red-100/60 via-orange-100/60 to-yellow-100/60 dark:from-red-900/40 dark:via-orange-900/40 dark:to-yellow-900/40 backdrop-blur-2xl rounded-3xl p-8 md:p-12 shadow-2xl border border-orange-300/50 dark:border-orange-600/50">
-                <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-800 dark:text-white">
+              <div className="bg-gradient-to-br from-red-100/60 via-orange-100/60 to-yellow-100/60 dark:from-red-900/40 dark:via-orange-900/40 dark:to-yellow-900/40 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl border border-orange-300/50 dark:border-orange-600/50 mx-2 sm:mx-0">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-gray-800 dark:text-white">
                   Important boundaries
                 </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mb-8 rounded-full"></div>
-                <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300">
+                <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mb-6 sm:mb-8 rounded-full"></div>
+                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">
                   <p>I won't pretend to have all the answers. I won't sugarcoat hard truths. I won't judge your choices.</p>
                   <p>I won't push you to book again. I won't chase you. I won't pressure you.</p>
-                  <p className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 dark:from-orange-400 dark:to-red-400 bg-clip-text text-transparent">
+                  <p className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 dark:from-orange-400 dark:to-red-400 bg-clip-text text-transparent">
                     This is your space. You control it.
                   </p>
                 </div>
@@ -886,22 +890,22 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* If This Resonates - CTA */}
-        <section className="relative py-32 px-4">
-          <div className="max-w-4xl mx-auto text-center">
+        <section className="relative py-16 sm:py-24 md:py-32 px-4">
+          <div className="max-w-4xl mx-auto">
             <ScrollReveal immediate={true}>
-              <div className="bg-gradient-to-br from-purple-200/80 via-pink-200/80 to-orange-200/80 dark:from-purple-900/60 dark:via-pink-900/60 dark:to-orange-900/60 backdrop-blur-2xl rounded-3xl p-12 md:p-16 shadow-2xl border border-purple-300/50 dark:border-purple-600/50 hover:scale-105 transition-all duration-500">
-                <Sparkles className="w-16 h-16 mx-auto mb-6 text-purple-600 dark:text-purple-400 animate-pulse" />
-                <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+              <div className="bg-gradient-to-br from-purple-200/80 via-pink-200/80 to-orange-200/80 dark:from-purple-900/60 dark:via-pink-900/60 dark:to-orange-900/60 backdrop-blur-2xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-16 shadow-2xl border border-purple-300/50 dark:border-purple-600/50 hover:scale-105 transition-all duration-500 mx-2 sm:mx-0">
+                <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 text-purple-600 dark:text-purple-400 animate-pulse" />
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent text-center">
                   If this resonates
                 </h2>
-                <div className="w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-8 rounded-full"></div>
-                <div className="space-y-6 text-xl text-gray-700 dark:text-gray-300 mb-12">
+                <div className="w-20 sm:w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-6 sm:mb-8 rounded-full"></div>
+                <div className="space-y-3 sm:space-y-6 text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300 mb-8 sm:mb-12 text-center">
                   <p>If something on this page feels familiar, you're probably in the right place.</p>
                   <p>You can book a session. Or you can just reach out with a question.</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <p className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">
                     No obligation. No follow-up pressure. No expectations.
                   </p>
-                  <p className="italic">Only if it feels right to you.</p>
+                  <p className="italic text-sm sm:text-base">Only if it feels right to you.</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -988,24 +992,24 @@ const FriendBookingWebsite = () => {
         </section>
 
         {/* Final Footer */}
-        <footer className="relative py-16 px-4 bg-gradient-to-b from-transparent to-purple-100/50 dark:to-purple-900/30">
-          <div className="max-w-3xl mx-auto text-center">
+        <footer className="relative py-12 sm:py-16 px-4 bg-gradient-to-b from-transparent to-purple-100/50 dark:to-purple-900/30">
+          <div className="max-w-3xl mx-auto text-center px-2 sm:px-0">
             <ScrollReveal immediate={true}>
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <Sparkles className="w-6 h-6 text-purple-600 dark:text-purple-400 animate-pulse" />
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6 flex-wrap">
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400 animate-pulse flex-shrink-0" />
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                   Whenever you're ready.
                 </h2>
-                <Sparkles className="w-6 h-6 text-pink-600 dark:text-pink-400 animate-pulse" />
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-pink-600 dark:text-pink-400 animate-pulse flex-shrink-0" />
               </div>
             </ScrollReveal>
             <ScrollReveal immediate={true}>
-              <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-3 sm:mb-4">
                 Sometimes one honest conversation is enough to change the direction.
               </p>
             </ScrollReveal>
             <ScrollReveal immediate={true}>
-              <p className="text-sm text-gray-500 dark:text-gray-500 italic">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500 italic">
                 © 2026 RentMe — Real conversations, real support.
               </p>
             </ScrollReveal>
